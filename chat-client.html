@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>Gabe's Chat Site (with a little Conway)</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <style>
@@ -20,7 +20,7 @@
     #notifbox{height:20%; border: 3px solid black; border-radius: 2%; position: fixed; left:27%; bottom: 10%; width:25%; min-width:200px; background-color: lightblue; padding:5px;overflow: auto; padding-bottom: 3em;}
 
     #chat{border-radius:50%;text-align: center; width: 50px; height: 50px; background-color: darkgrey; border: solid black 2px; display: inline; vertical-align: middle;margin-left: 5em}
-    #banner{position: fixed; left:0; bottom:0; width: 100%; height: 13%;background-color: lightblue; border:5px solid white; border-radius: 50% 50% 0 0; overflow: hidden; padding:30px 50px 30px 50px; text-align: left;}
+    #banner{position: fixed; left:0; bottom:0; width: 100%; height: 13%;background-color: lightblue; border:5px solid white; border-radius: 50% 50% 0 0; padding:30px 50px 30px 50px; text-align: left;}
     #notif{border-radius:50%; text-align: center; width: 50px; height: 50px; border: solid black 2px; display: inline; vertical-align: middle; margin-left: 5em;}
     .note{
       color: red;
@@ -62,16 +62,6 @@
 }
 .gamebutton{
   border-radius:50%; text-align: center; width: 50px; height: 50px; border: solid black 2px; display: inline; vertical-align: middle; margin-left: 5em;
- /* float:left;
-  margin:auto;
-  overflow: hidden;
-  background-color: lightblue;
-  width: 80px;
-  height: 80px;
-  font-size: 8pt;
-  display: block;
-  border: 2px solid black;
-  border-radius: 50%;*/
 }
 #rows{overflow: hidden;background-color: lightblue; width: 100px;height: 30px;font-size: 15pt;border: 2px solid black;border-radius: 2px;text-align: center; display: inline; vertical-align: middle; margin-left: 5em;}
 .gamebutton:hover{
