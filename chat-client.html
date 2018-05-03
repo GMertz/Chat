@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Gabe's Chat Site (with a little Conway)</title>
+    <title>Sluck (with a little Conway)</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <style>
@@ -72,6 +72,7 @@
   margin-left:40%;
   margin-top:2%;
 }
+#count{font-size:20pt;overflow: hidden;height: 40px;min-width: 20px;border-radius: 5px;text-align: center; width: 50px; border: solid black 2px; display: inline; vertical-align: middle; margin-left: 5em;}
   </style>
     <script>
       $(function (){
@@ -150,6 +151,10 @@
            $('#messages').append(newm);
            $('#messages').scrollTop($('#messages')[0].scrollHeight - $('#messages')[0].clientHeight);
         });
+        socket.on('count',function(userCount){
+          console.log("got one ",userCount);
+          $('#count').html("Online:"+userCount);
+        });
         socket.on('notif',function(info){
           for(let n of info){
             if(n[0] !== undefined || n[1] !== undefined)
@@ -185,6 +190,7 @@
       <button id="reset" class="gamebutton">Reset</button>
       <button id="init" class="gamebutton">Init</button>
       <input type="number" id="rows"value="10"></input>
+      <div id="count"></div>
   </div>
   <script>
     var board;
@@ -370,6 +376,5 @@
   <div id="conway">
   <canvas id='game'></canvas>
     </div>
-  <div>
   </body>
 </html>

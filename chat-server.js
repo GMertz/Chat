@@ -21,7 +21,7 @@ Things I would Add with more time
 */
 io.on('connection', function(socket){
 	socket.emit("user data",users.newUsr(socket.id));
-	socket.emit("server message", "Log-in with /n <name> !");
+	socket.emit("server message", "Log-in with /n <name> ! \n (Type /help to for more information on commands)");
 	socket.on('chat message', function(msg){
 		console.log('message received from: ',socket.id);
 		if(users.getUser(socket.id).name === null && msg.slice(0,5) !== '/help' && msg.slice(0,2) !== '/n'){
@@ -44,6 +44,7 @@ io.on('connection', function(socket){
 	});
 	socket.on('request update',function(){	
 		var info = cmds.getChanges(socket.id);
+		socket.emit('count',users.online());
 		if(info !== false)
 			socket.emit('notif',info);
 	});

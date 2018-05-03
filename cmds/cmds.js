@@ -3,7 +3,7 @@ var cmds = [//to add, block, print blocked, remove friend
 {n:"n",f:rname,d:"/n <name> \n  sets users name to <name>"},
 {n:"add",f:add,d:"/add <name-1> ... <name-n> \n  send users friend request"},
 {n:"msg",f:msg,d:"/msg <name> <message> \n  Send a friend a message"},
-{n:"whois",f:users.isUserm,d:"/whois <name> \n  Check who user <name> is"},
+/*{n:"whois",f:users.isUserm,d:"/whois <name> \n  Check who user <name> is"},*/
 {n:"help",f:help,d:"/help \n  You just used this one!"},
 {n:"friends",f:prntFriends,d:"/friends prints all friends"},
 {n:"block",f:block,d:"/block <name-1> ... <name.n> \n  Block some jerks"},

@@ -1,5 +1,6 @@
 var users = [];
 
+exports.online = function (){return users.length;}
 exports.isUser = function (name){
 	if(name.length === 0)
 		return false;
@@ -109,7 +110,7 @@ var user = function(id){
 	this.printBlocked = function(){
 		var msg = '';
 		for(let b of this.blocked)
-			msg+= b+ '\n ';
+			msg+= b.name+ '\n ';
 		return msg;
 	}
 	this.block = function(user){
