@@ -1,97 +1,185 @@
 <!doctype html>
 <html>
   <head>
-    <title>Sluck (with a little Conway)</title>
+    <title>Gabe's Chat</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font: 13px Helvetica, Arial;}
-    form { background: #000; padding: 1%; position: absolute; bottom: 0; left:0; width: 100%;}
-    form input {border: 0; padding: 3%; margin-right:0; width:72%; overflow: hidden;}
-    form button {width:25%; background: rgb(130, 224, 255); border: none; padding: 3%; overflow: hidden;}
-    #messages { list-style-type: none; margin: 0; padding: 0; overflow-y: auto; height: 100%;}
-    #messages div { padding: 5px 5px 8px 5px; margin-bottom: 1em; width: 85%;overflow: hidden; border: solid grey 3px; min-height: 6%; white-space: pre-wrap;}
-    .me {margin-left: 20px; float: right; background-color: lightpink; border-radius: 5px 0 10px 10px;}
-    .others{margin-right: 20px; float: left; background-color: #feeded; border-radius: 0 10px 10px 5px;}
-    .server{margin-right: 20px; float: left; background-color:#AAEEEE; border-radius: 0 10px 10px 5px;}
-    .private{margin-right: 20px; float: left; background-color:purple; border-radius: 0 10px 10px 5px;}
-    #chatbox{height:80%; padding:0; border: 3px solid black; border-radius: 2%; position: fixed; left:0; bottom: 10%; width:25%; min-width:200px; background-color: lightblue; padding:5px;overflow: auto; padding-bottom: 3em;}
-    #notifbox{height:20%; border: 3px solid black; border-radius: 2%; position: fixed; left:27%; bottom: 10%; width:25%; min-width:200px; background-color: lightblue; padding:5px;overflow: auto; padding-bottom: 3em;}
+    
+  <style>
 
-    #chat{border-radius:50%;text-align: center; width: 50px; height: 50px; background-color: darkgrey; border: solid black 2px; display: inline; vertical-align: middle;margin-left: 5em}
-    #banner{position: fixed; left:0; bottom:0; width: 100%; height: 13%;background-color: lightblue; border:5px solid white; border-radius: 50% 50% 0 0; padding:30px 50px 30px 50px; text-align: left;}
-    #notif{border-radius:50%; text-align: center; width: 50px; height: 50px; border: solid black 2px; display: inline; vertical-align: middle; margin-left: 5em;}
+    * 
+    {
+      box-sizing: border-box;
+    }
+
+    body 
+    {
+      height: 100%;
+      font: 13px Helvetica, Arial;
+      background-color: beige;
+    }
+
+    html 
+    {
+      height: 100%;
+    }
+
+    form 
+    {
+      padding: .5%;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+    }
+
+    form input {
+      border: 0;
+      padding: 3%;
+      margin-right:0;
+      width:84%;
+      overflow: hidden;
+    }
+
+    form button {
+      width:15%;
+      margin: auto;
+      height: 85%;
+      background: lightgrey;
+      border: 2px solid darkgrey;
+      padding: 1%;
+      overflow: hidden;
+      font-size: 16pt;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    #messages 
+    {
+      list-style-type: none; 
+      margin: 5px;
+      padding: 0;
+      overflow-y: auto;
+      height: 100%;
+      grid-row: 1;
+    }
+
+    #messages div {
+      padding: 5px 5px 8px 5px;
+      margin-bottom: 1em;
+      width: 85%;
+      overflow: hidden;
+      border: solid grey 3px;
+      min-height: 6%;
+      white-space: pre-wrap;
+    }
+
+    .me{
+      margin-left: 20px;
+      float: right;
+      background-color: palegreen;
+      border-radius: 5px 0 10px 10px;
+    }
+
+    .others{
+      margin-right: 20px;
+      float: left;
+      background-color: lightblue;
+      border-radius: 0 10px 10px 5px;
+    }
+
+    .server{
+      margin-right: 20px;
+      float: left;
+      background-color: lightgrey;
+      border-radius: 0 10px 10px 5px;
+    }
+
+    .private{
+      margin-right: 20px;
+      float: left;
+      background-color: lightpink;
+      border-radius: 0 10px 10px 5px;
+    }
+
+    #chatbox{
+      height:90%;
+      margin: auto;
+      border: 3px solid black;
+      border-radius: 2%;
+      width:55%;
+      background-color: lightskyblue;
+      padding:0;
+      overflow: hidden;
+      display: grid;
+      grid-row-gap: 10px;
+      grid-template-rows: 86% auto;
+    }
+
+    #notifbox{
+      height:82%;
+      padding:5px;
+      overflow: auto;
+    }
+
     .note{
-      color: red;
-      text-align: left;
-      font-size: 12pt;
-      border: solid white 3px;
+      color: black;      
+      text-align: left;      
+      font-size: 13pt;      
+      border: solid white 3px;      
+      border-radius: 5px;      
+      text-align: center;      
+      overflow: hidden;      
+      background-color: lightgrey; 
+      border: 2px solid grey;     
+    }
+
+    h1{
+      text-align: center;
+      font-size: 24pt;
+      color: blue;    
+    }
+
+    #count{
+      font-size:20pt;
+      overflow: hidden;
+      height: 40px;
       border-radius: 5px;
       text-align: center;
-      overflow: hidden;
-      background-color:pink;
+      width: 70%;
+      border: solid black 2px;
+      background-color: white;
+      margin: auto;
     }
-    h1{
-  text-align: center;
-  font-size: 24pt;
-  color: blue;
-}
-#main{
-  margin-top: 8em;
-  overflow: hidden;
-}
-#header{
-  position: fixed;
-  top:0;
-  width: 100%;
-  height: 83px;
-  text-align: center;
-  font-size: 15pt;
-  border: solid black;
-  background-color: lightblue;
-  color: white;
-}
-#game{
-  overflow: hidden;
-  margin: auto;
-  width: 600px;
-  height: 600px;
-  border: 2px solid black;
-  display: inline
-}
-.gamebutton{
-  border-radius:50%; text-align: center; width: 50px; height: 50px; border: solid black 2px; display: inline; vertical-align: middle; margin-left: 5em;
-}
-#rows{overflow: hidden;background-color: lightblue; width: 100px;height: 30px;font-size: 15pt;border: 2px solid black;border-radius: 2px;text-align: center; display: inline; vertical-align: middle; margin-left: 5em;}
-.gamebutton:hover{
-  cursor: pointer;
-  background-color: lightpink;
-}
-#conway{
-  margin-left:40%;
-  margin-top:2%;
-}
-#count{font-size:20pt;overflow: hidden;height: 40px;min-width: 20px;border-radius: 5px;text-align: center; width: 50px; border: solid black 2px; display: inline; vertical-align: middle; margin-left: 5em;}
-  </style>
-    <script>
-      $(function (){
-        $('#chat').on('click',function(){
-            if($('#chatbox').is(':visible') === false)
-              $('#chatbox').show();
-            else
-              $('#chatbox').hide();
-          });
-        $('#notif').on('click',function(){
-            if($('#notifbox').is(':visible') === false)
-              $('#notifbox').show();
-            else
-              $('#notifbox').hide();
 
-            $('#notif').css("background-color", "white");
-          });
-      });
-    </script>
+    #other{
+      border: black 3px solid;
+      border-radius: 10px;
+      background-color: lightskyblue;
+      float: right;
+      max-width: 200px;
+    }
+
+    #notificationsTitle
+    {
+      width:100%; 
+      height:50px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 22pt;
+    }
+    #infoPanel
+    {
+      float:left;
+      font-size: 16pt;
+      padding: 1%;
+      background-color: lightskyblue;
+      border: black 3px solid;
+      border-radius: 10px;
+      max-width: 150px;
+      overflow: hidden;
+    }
+  </style>
+
     <script>
       var blocked = [];
       var ud = null;
@@ -126,12 +214,13 @@
           $('#m').val('');
           return false;
       });
+
       socket.on('chat message', function(msg,socketid){
         for(let b of blocked){
           console.log('checking ',b," with",socketid);
           if(b === socketid)
             msg ='';
-        }
+      }
         if(msg.length !== 0){
           console.log("message received!:", msg);
           var newm = $('<div>').text(msg).addClass("others");
@@ -139,22 +228,26 @@
           $('#messages').scrollTop($('#messages')[0].scrollHeight - $('#messages')[0].clientHeight);
         }
       });
+
       socket.on('userdata',function(usd){
         ud = usd;
         console.log("usd received");
 
       });
-        socket.on('server message',function(msg){
+
+      socket.on('server message',function(msg){
           console.log("server message received");
           var newm = $('<div>').text(msg).addClass("server");
           newm.prepend($('<strong>').text("Server:\n "));
            $('#messages').append(newm);
            $('#messages').scrollTop($('#messages')[0].scrollHeight - $('#messages')[0].clientHeight);
         });
+
         socket.on('count',function(userCount){
           console.log("got one ",userCount);
           $('#count').html("Online:"+userCount);
         });
+
         socket.on('notif',function(info){
           for(let n of info){
             if(n[0] !== undefined || n[1] !== undefined)
@@ -169,212 +262,32 @@
           }
           $('#notifbox').scrollTop($('#notifbox')[0].scrollHeight - $('#notifbox')[0].clientHeight);
         });
-    });//end function
+      });//end function
     </script>
   </head>
+
   <body>
-    <div id="banner">
-      <button id='chat'>Chat</button>
-      <div id='chatbox'>
-          <div id="messages">
-            <form action="">
-            <input id="m" autocomplete="off" />
-            <button>Send</button>
-            </form></div>   
-      </div>
-    <button id="notif">
-      <strong style="font-size: 20pt;">!</strong>
-    </button>
-      <div id="notifbox"></div>
-      <button id="play" class="gamebutton">Play</button>
-      <button id="reset" class="gamebutton">Reset</button>
-      <button id="init" class="gamebutton">Init</button>
-      <input type="number" id="rows"value="10"></input>
-      <div id="count"></div>
-  </div>
-  <script>
-    var board;
-    var rows = 20;
-    var box;
-    var ctx;
-    var s = 5;
-    var mouseX= 0,mouseY=0;
-    var mDown=false;
-    var update;
-    var playing = false;
-    var offSets = [{x:0,y:-1},{x:1,y:-1},{x:1,y:0},{x:1,y:1},{x:0,y:1},{x:-1,y:1},{x:-1,y:0},{x:-1,y:-1}];
-    var cellCol ={on:"white",off:"black"};
-    var borderCol = "lightblue";
-    var rowCount;
-    var playButton;
-
-    window.onload = function(){
-      board = document.getElementById("game");
-      board.addEventListener("mousedown",mouseDown);
-      document.addEventListener("mouseup",mouseUp);
-      board.addEventListener("mousemove",mousePos);
-      playButton = document.getElementById("play");
-      playButton.addEventListener("click",function(){
-        if(playing == false){
-          playButton.innerHTML = "Pause";
-          update = setInterval(tick,1000/10);
-          playing = true;
-        }else
-          pause();
-      });
-      document.getElementById("reset").addEventListener("click",function(){
-        if(playing == false){
-        console.log("working");
-          for(var i = 0; i<box.rows; i++){
-              for(var k = 0; k<box.rows;k++){
-                var c = box.cells[i][k];
-                c.alive = true;
-                c.draw();
-              }
-          }
-        }
-        tick();
-      });
-      rowCount = document.getElementById("rows");
-      document.getElementById("init").addEventListener("click",initBoard);
-      board.width = 600;
-      board.height = 600;
-      ctx=board.getContext("2d");
-      initBoard();
-    }
-    function initBoard(){
-      rows = rowCount.value;
-      if(rows > 100)
-        rows = 100;
-      box = {cells:[],x:0,y:0,width:600,rows:rows};
-      for(var i = 0; i<box.rows; i++){
-        var row = [];
-        for(var k = 0; k<box.rows;k++){
-          var c = new cell(i,k,box.width/box.rows,false);
-          row.push(c);
-          c.draw();
-        }
-        box.cells.push(row);
-      }
-      console.log("pretick");
-      tick();
-      console.log("done");
-    }
-    function sketch(x,y,w,alive){
-      ctx.fillStyle = cellCol.off;
-      if(alive){
-        ctx.fillStyle = cellCol.on;
-      }
-      ctx.fillRect(x*w,y*w,w,w);
-      ctx.beginPath();
-      ctx.strokeStyle = borderCol;
-      ctx.lineWidth = 2;
-      ctx.rect(x*w,y*w,w,w);
-      ctx.stroke();
-    }
-    function cell (x,y,w,a){
-      this.x = x;
-      this.y = y;
-      this.w = w;
-      this.alive = a;
-      this.c = false;
-      //this.path = [{x:(x*hw)-hw,y:(y*hw)-hw},{x:(x*hw)+hw,y:(y*hw)-hw},{x:(x*hw)+hw,y:(y*hw)+hw},{x:(x*hw)-hw,y:(y*hw)+hw}];
-      this.n = function(){
-        var s = 0;
-        for(var i = 0; i<8; i++){
-          var x = offSets[i].x+this.x;
-          var y = offSets[i].y+this.y;
-          if(x < 0)
-            x = rows-1;
-          if(x >= rows)
-            x = 0;
-          if(y < 0)
-            y = rows-1;
-          if(y >= rows)
-            y = 0;
-          var sq = box.cells[x][y];
-          if(sq.alive)
-            s++;
-        }
-        if((this.alive) && (s < 2 || s > 3))
-          this.c = true;
-        else if(s == 3 && !this.alive){
-          this.c = true;
-        }
-      }
-      this.draw = function(){
-        sketch(this.x,this.y,this.w,this.alive);
-      }
-      this.change = function(){
-        if(this.c){
-          this.alive = !this.alive;
-          this.draw();
-          this.c = false;
-          return 1;
-        }
-        return 0;
-
-      }
-    }
-    function tick(){
-      for(var i = 0; i<rows; i++){
-        for(var k = 0; k<rows; k++){
-          var b = box.cells[i][k];
-          b.n();
-        }
-      }
-      var total = 0;
-      for(var i = 0; i<rows; i++){
-        for(var k = 0; k<rows; k++){
-          var b = box.cells[i][k];
-          total += b.change();
-        }
-      }
-      if(total < 1){
-        pause();
-      }
-
-    }
-    function mouseDown(){
-      mDown = true;
-      if(playing == false){
-          var x = Math.floor((mouseX)/(box.width/rows));
-          var y = Math.floor((mouseY)/(box.width/rows));
-          if(x > -1 && x < rows && y > -1 && y < rows){
-            var b = box.cells[x][y];
-            b.alive = !b.alive;
-            b.draw();
-          }
-      }
-    }
-    function mouseUp(){
-        mDown = false;
-    }
-    function mousePos(e){
-        mouseX = e.pageX - board.offsetLeft;
-        mouseY = e.pageY - board.offsetTop;
-      if(playing == false && mDown){
-        if(mouseX > box.x && mouseX < box.x+box.width && mouseY > box.y && mouseY < box.y+box.width ){
-        var x = Math.floor((mouseX)/(box.width/rows));
-        var y = Math.floor((mouseY)/(box.width/rows));
-        if(x > -1 && x < rows && y > -1 && y < rows){
-          var b = box.cells[x][y];
-          b.alive = true;
-          b.draw();
-        }
-      }
-        
-    }
-    }
-    function pause(){
-      playButton.innerHTML = "Play";
-      clearInterval(update);
-      playing=false;
-    }
-
-  </script>
-  <div id="conway">
-  <canvas id='game'></canvas>
+    <div id="infoPanel">
+      Hey there, welcome to the chat! <br/>
+      No one comes here, but its still cool!
+      <br/><br/>
+      To get started, give yourself a name with /n! 
+      <br/><br/>
+      (Type /help for help)
     </div>
+    <div id="other">
+      <div id="notificationsTitle">Notifications</div>
+      <div id="notifbox"></div>
+      <div id="count"></div>
+    </div>
+    <div id='chatbox'>
+      <div id="messages">
+      </div>
+      <form action="">
+        <input id="m" autocomplete="off" />
+        <button>Send</button>
+      </form>
+    </div>   
+    
   </body>
 </html>
