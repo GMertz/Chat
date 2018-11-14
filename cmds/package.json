@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "cmds for chat",
   "main": "cmds.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Gabe Mertz <gmertz@lclark.edu>",
   "license": "ISC"
 }

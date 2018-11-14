@@ -1,7 +1,18 @@
 {
-  "name": "socket-chat-example",
+  "name": "Gabe's Chat",
   "version": "0.0.1",
-  "description": "my first socket.io app",
+  "description": "Simple Chat App",
+  "scripts" : {
+    "start" : "node server.js",
+    "deploy": "gcloud app deploy"
+  },
+  "engines" : {
+    "node" : ">=4.3.2"
+  },
+  "respository" : {
+    "type" : "git",
+    "url" : "https://github.com/Gmertz/web-dev-final/"
+  },
   "dependencies": {
     "cmds": "file:cmds",
     "cookie-parser": "^1.4.3",
