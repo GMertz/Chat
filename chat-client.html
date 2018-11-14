@@ -187,7 +187,7 @@
         var socket = io();
         setInterval(function(){
           socket.emit('request update');
-        },1000/2);
+        },1000);
         $('form').submit(function(){
 
           var msg = $('#m').val();
@@ -200,7 +200,6 @@
           }
           if(msg.slice(0,4) === '/add'){
             var note = msg.split(" ");
-            console.log("is ",note[1]," alive")
             if($('#'+note[1]) !== undefined){
               $('#'+note[1]).remove();
               $('#notif').css("background-color", "white");
@@ -217,7 +216,6 @@
 
       socket.on('chat message', function(msg,socketid){
         for(let b of blocked){
-          console.log('checking ',b," with",socketid);
           if(b === socketid)
             msg ='';
       }
@@ -231,8 +229,6 @@
 
       socket.on('userdata',function(usd){
         ud = usd;
-        console.log("usd received");
-
       });
 
       socket.on('server message',function(msg){
@@ -244,7 +240,6 @@
         });
 
         socket.on('count',function(userCount){
-          console.log("got one ",userCount);
           $('#count').html("Online:"+userCount);
         });
 

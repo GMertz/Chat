@@ -22,13 +22,10 @@ io.on('connection', function(socket){
 	socket.emit("server message", "Log-in with /n <name> ! \n (Type /help to for more information on commands)");
 	
 	socket.on('chat message', function(msg){
-		console.log('message received from: ',socket.id);
 
 		//if you arent logged in, you can only use '/n' and '/help' commands
 		if(users.getUser(socket.id).name === null && msg.slice(0,5) !== '/help' && msg.slice(0,2) !== '/n'){
-			
-			//console.log(users.getUser(socket.id));
-				socket.emit('server message', 
+			socket.emit('server message', 
 					"You are not logged on! use '/n <name>' to set a name and log on!");
 		//commands
 		}else if(msg[0] == '/'){

@@ -62,7 +62,6 @@ function rname(args, socketid){
 		return	resultify("Name already in use!", false, socketid, 'server message');
 	if(validName(name) === false)
 		return resultify("Invalid name! Only letters and numbers", false, socketid, 'server message');
-	//console.log(socketid,"Is now: ",name);
 	
 	var res = users.updateUser(socketid,{name:name});
 	return resultify("Name changed to: "+name, true, socketid, 'server message',{data:res,type:"user data"});
@@ -157,7 +156,6 @@ function validName(name){
 			(c >'9'.charCodeAt() && c <'A'.charCodeAt()) || 
 			(c >'Z'.charCodeAt() && c <'a'.charCodeAt()) || 
 			(c >'z'.charCodeAt()) ){
-			console.log("lmao you cant name urself ",name);
 			return false;
 		}
 	}

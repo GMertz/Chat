@@ -29,7 +29,6 @@ exports.newUsr = function(socketid){
 //update a users information with the given info
 exports.updateUser = function(socketid,info){
 	u = getUsr(socketid).update(info)
-	console.log(u);
 	return u;
 }
 
@@ -108,7 +107,6 @@ var user = function(id){
 	this.removeFriend = function(user){
 		var i = this.friends.indexOf(user);
 		this.friends.splice(i,1);
-		console.log("removed",user.name,"now, ",this.friends);
 		return true;
 	}
 
