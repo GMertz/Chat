@@ -4,6 +4,10 @@ var app = require('express')(),
 	cmds = require('./cmds'),
 	users = require('./cmds/users.js');
 
+app.get('/_ah/health',function(req,res){
+	res.sendStatus(200);
+});
+
 app.get('/',function(req,res){
 	res.sendFile(__dirname + '/chat-client.html');
 });

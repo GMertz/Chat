@@ -82,6 +82,8 @@ var user = function(id){
 			this.notif.push([type,getUsr(senderid).name,data]);
 		else if(type === 'Block')
 			this.notif.push([type,senderid]);
+
+		//return true and format and send it right there
 		
 	}
 

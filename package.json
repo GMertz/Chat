@@ -1,7 +1,7 @@
 {
-  "name": "Gabe's Chat",
+  "name": "chat",
   "version": "0.0.1",
-  "description": "Simple Chat App",
+  "description": "Simple chat app",
   "scripts" : {
     "start" : "node server.js",
     "deploy": "gcloud app deploy"
@@ -11,7 +11,7 @@
   },
   "respository" : {
     "type" : "git",
-    "url" : "https://github.com/Gmertz/web-dev-final/"
+    "url" : "https://github.com/gmertz/web-dev-final/"
   },
   "dependencies": {
     "cmds": "file:cmds",

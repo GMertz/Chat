@@ -188,6 +188,7 @@
         setInterval(function(){
           socket.emit('request update');
         },1000);
+
         $('form').submit(function(){
 
           var msg = $('#m').val();
