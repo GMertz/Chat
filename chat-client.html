@@ -6,7 +6,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     
   <style>
-
     * 
     {
       box-sizing: border-box;
@@ -14,11 +13,15 @@
 
     body 
     {
+      display: grid;
+      grid-template-columns: 20% 60% 20%;
+      grid-template-rows: 100%;
       height: 100%;
       font: 13px Helvetica, Arial;
-      background-color: beige;
+      background-color: lightskyblue;
+      margin: 0;
+      overflow-x: hidden;
     }
-
     html 
     {
       height: 100%;
@@ -26,6 +29,9 @@
 
     form 
     {
+      display: grid;
+      grid-template-columns: 85% 14%;
+      grid-column-gap: 2%;
       padding: .5%;
       width: 100%;
       height: 100%;
@@ -34,22 +40,21 @@
 
     form input {
       border: 0;
-      padding: 3%;
+      padding: 1%;
       margin-right:0;
-      width:84%;
+      width:100%;
       overflow: hidden;
     }
 
     form button {
-      width:15%;
-      margin: auto;
-      height: 85%;
-      background: lightgrey;
+      width: 90%;
+      height: 90%;
+      background: beige;
       border: 2px solid darkgrey;
-      padding: 1%;
+      border-radius: 5%;
+      padding: 0;
       overflow: hidden;
-      font-size: 16pt;
-      font-weight: bold;
+      font-size: 12pt;
       text-align: center;
     }
 
@@ -68,7 +73,6 @@
       margin-bottom: 1em;
       width: 85%;
       overflow: hidden;
-      border: solid grey 3px;
       min-height: 6%;
       white-space: pre-wrap;
     }
@@ -83,7 +87,7 @@
     .others{
       margin-right: 20px;
       float: left;
-      background-color: lightblue;
+      background-color: beige;
       border-radius: 0 10px 10px 5px;
     }
 
@@ -106,13 +110,16 @@
       margin: auto;
       border: 3px solid black;
       border-radius: 2%;
-      width:55%;
-      background-color: lightskyblue;
+      width:70%;
+      background-color: floralwhite;
+      opacity: 80%;
       padding:0;
       overflow: hidden;
       display: grid;
       grid-row-gap: 10px;
-      grid-template-rows: 86% auto;
+      grid-template-rows: 90% auto;
+      grid-column: 2;
+      grid-row: 1;
     }
 
     #notifbox{
@@ -154,9 +161,8 @@
     #other{
       border: black 3px solid;
       border-radius: 10px;
-      background-color: lightskyblue;
-      float: right;
-      max-width: 200px;
+      background-color: beige;
+      grid-column: 3;
     }
 
     #notificationsTitle
@@ -165,19 +171,113 @@
       height:50px;
       text-align: center;
       font-weight: bold;
-      font-size: 22pt;
-    }
-    #infoPanel
-    {
-      float:left;
       font-size: 16pt;
-      padding: 1%;
-      background-color: lightskyblue;
+    }
+    #infopanel
+    {
+      grid-column: 1;
+      grid-row: 1;
+      font-size: 16pt;
+      padding:2%;
+      background-color: beige;
       border: black 3px solid;
       border-radius: 10px;
-      max-width: 150px;
-      overflow: hidden;
+      height: fit-content;
     }
+
+    #online{
+      float right;
+      
+    }
+
+    @media screen and (max-width: 800px)
+    {
+      body
+      {
+        display: grid;
+        grid-template-columns: 70% 30%;
+        grid-template-rows: 80% 20%;
+        grid-column-gap: 3%;
+        grid-row-gap: 3%;
+        margin: 0;
+      }
+      form button{
+        font-size: unset;
+        font-weight: unset;
+      }
+      #chatbox
+      {
+        border-radius: unset;
+        border: 2px solid black;
+        border-top: 0;
+        border-left: 0;
+        grid-column-start: 1;
+        grid-column-end: 1;
+
+        grid-row-start: 1;
+        grid-row-end: 1;
+        margin: auto;
+        width: 100%;
+        height: 100%;
+      }
+      #other
+      {
+        border-radius: unset;
+        border: 2px solid black;
+        border-right: 0;
+        border-top: 0;
+        grid-column-start: 2;
+        grid-column-end: 2;
+
+        grid-row-start: 1;
+        grid-row-end: 1;
+        float: unset;
+        overflow: hidden;
+        max-width: unset;
+
+      }
+      #infopanel
+      {
+        border-radius: unset;
+        border:unset;
+        border-top: 2px solid black;
+
+        grid-column-start: 1;
+        grid-column-end: 3;
+
+        grid-row-start: 2;
+        grid-row-end: 2;
+        max-width: unset;
+        float: unset;
+        overflow: hidden;
+        text-align: center;
+      }
+      #notificationsTitle{
+        font-size: 14pt;
+        height:10%;
+      }
+      #notifbox{
+        height:80%;
+      }
+      #count{
+        font-size:12pt;
+        height: 10%;
+      }
+    }
+    @media screen and (max-width: 500px)
+      {
+        form button{
+          font-size: 5pt;
+        }  
+        #notificationsTitle
+        {
+          font-size: 8pt;
+        }
+        #messages div
+        {
+          font: 10px Helvetica, Arial;
+        }
+      }
   </style>
 
     <script>
@@ -262,19 +362,16 @@
     </script>
   </head>
 
-  <body>
-    <div id="infoPanel">
-      Hey there, welcome to the chat! <br/>
-      No one comes here, but its still cool!
-      <br/><br/>
-      To get started, give yourself a name with /n! 
-      <br/><br/>
-      (Type /help for help)
-    </div>
+  <body> 
     <div id="other">
       <div id="notificationsTitle">Notifications</div>
       <div id="notifbox"></div>
       <div id="count"></div>
+    </div>
+    <div id="infopanel">
+      To get started, give yourself a name with /n
+      <br/><br/>
+      (Type /help for help)
     </div>
     <div id='chatbox'>
       <div id="messages">
